@@ -1,0 +1,7 @@
+{{log-in
+  isAuthenticated  = shelf.state.session.isAuthenticated
+  isAuthenticating = shelf.state.session.isAuthenticating
+
+  invalidateSessionAction   = (action (route-action 'invalidateSession'))
+  authenticateSessionAction = (action (route-action 'authenticateSession'))
+}}
