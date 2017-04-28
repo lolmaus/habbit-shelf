@@ -29,17 +29,17 @@ module.exports = function (environment) {
       }
     },
 
-    'ember-simple-auth' : {
-      routeAfterAuthentication    : 'main',
-      routeIfAlreadyAuthenticated : 'main',
-    },
+    // 'ember-simple-auth' : {
+    //   // routeAfterAuthentication    : 'main',
+    //   // routeIfAlreadyAuthenticated : 'main',
+    // },
 
     torii : {
       providers : {
         'github-oauth2' : {
           apiKey : envVars.HB_GITHUB_CLIENT_ID,
           // redirectUri: overridden in provider's `redirectUri` method
-          scope  : 'public_repo',
+          scope  : 'public_repo gist',
         }
       }
     },
@@ -53,8 +53,8 @@ module.exports = function (environment) {
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;
-    // ENV.APP.LOG_TRANSITIONS = true;
-    // ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
+    ENV.APP.LOG_TRANSITIONS = true;
+    ENV.APP.LOG_TRANSITIONS_INTERNAL = true;
     // ENV.APP.LOG_VIEW_LOOKUPS = true;
   }
 

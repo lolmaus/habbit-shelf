@@ -8,12 +8,9 @@ import {Node, createNodeCP} from 'ember-shelf'
 
 export default Node.extend({
   attrNames : [
-    'github',
-    'routes',
-    'session',
+    'gist',
   ],
 
-  github  : createNodeCP('github'),
-  routes  : createNodeCP('routes'),
-  session : createNodeCP('session'),
+  lists_index : createNodeCP('lists/index'),
+  lists_list  : createNodeCP('lists/list'),
 })

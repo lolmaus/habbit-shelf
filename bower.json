@@ -1,5 +1,6 @@
 {
   "name": "habbit-shelf",
   "dependencies": {
+    "octokat": "^0.6.4"
   }
 }

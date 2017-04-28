@@ -7,7 +7,7 @@ export function fetchGithub (url, params = {}) {
 
   const headers = {
     ...(params.headers || {}),
-    Accept : 'application/vnd.github.v3+json',
+    Accept : 'application/vnd.github.mercy-preview+json',
   }
 
   return fetch(effectiveURL, {
@@ -24,8 +24,15 @@ export function fetchGithubAuth (url, token, params = {}) {
     ...(token ? {Authorization : `token ${token}`} : {}),
   }
 
+  const body =
+    params.body
+      ? JSON.stringify(params.body, null, 2)
+      : params.body
+
   return fetchGithub(url, {
-    headers
+    ...params,
+    headers,
+    body
   })
 }
 
@@ -37,4 +44,12 @@ export function fetchGithubJson (...args) {
 
 export function fetchGithubAuthJson (...args) {
   return fetchGithubAuth(...args).then(result => result.json())
+}
+
+export function fetchGithubText (...args) {
+  return fetchGithub(...args).then(result => result.text())
+}
+
+export function fetchGithubAuthText (...args) {
+  return fetchGithubAuth(...args).then(result => result.text())
 }

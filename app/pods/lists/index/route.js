@@ -1,5 +1,6 @@
 // ----- Ember modules -----
 import Route from 'ember-route'
+import service from 'ember-service/inject'
 
 // ----- Ember addons -----
 import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-route-mixin'
@@ -7,4 +8,14 @@ import AuthenticatedRouteMixin from 'ember-simple-auth/mixins/authenticated-rout
 
 
 export default Route.extend(AuthenticatedRouteMixin, {
+
+  // ----- Services -----
+  shelf : service(),
+
+
+
+  // ----- Overridden methods -----
+  // beforeModel () {
+  //   this._super(...arguments)
+  // }
 })

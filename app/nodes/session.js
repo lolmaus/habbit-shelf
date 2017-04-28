@@ -7,6 +7,15 @@ import Node from 'ember-shelf/node'
 
 
 export default Node.extend({
+  attrNames : [
+    'isAuthenticated',
+    'isAuthenticating',
+
+    'provider',
+    'token',
+    'user',
+  ],
+
   isAuthenticated  : false,
   isAuthenticating : false,
 
@@ -15,15 +24,21 @@ export default Node.extend({
       this.setProperties({
         isAuthenticated  : false,
         isAuthenticating : true,
-        data             : null,
+
+        provider : null,
+        token    : null,
+        user     : null,
       })
     },
 
-    authenticate (data) {
+    authenticate ({provider, token, user}) {
       this.setProperties({
         isAuthenticated  : true,
         isAuthenticating : false,
-        data
+
+        provider,
+        token,
+        user,
       })
     },
 
@@ -31,7 +46,10 @@ export default Node.extend({
       this.setProperties({
         isAuthenticated  : false,
         isAuthenticating : false,
-        data             : null
+
+        provider : null,
+        token    : null,
+        user     : null,
       })
     },
   }

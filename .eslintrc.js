@@ -34,6 +34,6 @@ module.exports = {
   },
 
   "globals": {
-    // "showdown": false,
+    "_": true,
   }
 }
