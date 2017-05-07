@@ -3,6 +3,8 @@ import Controller from 'ember-controller'
 import {reads} from 'ember-computed'
 import service from 'ember-service/inject'
 
+// ----- Ember addons -----
+
 
 
 export default Controller.extend({
@@ -29,7 +31,7 @@ export default Controller.extend({
         .get('github')
         .createGist({files : {'foo.txt' : {content : 'lol!'}}})
         .catch(result => {
-          console.log('catch', result)
+          console.error('catch', result)
         })
         .finally(() => {
           state.dispatch('finishedCreatingGist')
@@ -46,7 +48,7 @@ export default Controller.extend({
         .get('github')
         .createList(slug)
         .catch(result => {
-          console.log('catch', result)
+          console.error('catch', result)
         })
         .finally(() => {
           state.dispatch('finishedCreatingList')

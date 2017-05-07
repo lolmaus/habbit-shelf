@@ -4,11 +4,13 @@ import {reads} from 'ember-computed'
 
 // ----- Ember addons -----
 // import computed from 'ember-macro-helpers/computed'
+// import raw from 'ember-macro-helpers/raw'
 import or from 'ember-awesome-macros/or'
 import not from 'ember-awesome-macros/not'
+// import raw from 'ember-macro-helpers/raw'
 
 // ----- Own modules -----
-import {Node} from 'ember-shelf'
+import {Node, createNodeCP} from 'ember-shelf'
 
 
 
@@ -20,6 +22,7 @@ export default Node.extend({
     'isLoadingGist',
     'isCreatingGist',
     'isCreatingList',
+    'listItemStates',
   ],
 
   userInputGistId   : reads('shelf.state.github.gist.id'),
@@ -29,6 +32,7 @@ export default Node.extend({
   isCreatingGist : false,
   isCreatingList : false,
 
+  listItemStates : createNodeCP('list-item-states'),
 
 
   // ----- Computed properties -----

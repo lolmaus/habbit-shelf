@@ -1,5 +1,8 @@
 // ----- Ember modules -----
-// import computed from 'ember-macro-helpers/computed'
+import {reads} from 'ember-computed'
+
+// ----- Ember addons -----
+import computed from 'ember-macro-helpers/computed'
 
 // ----- Own modules -----
 import Node from 'ember-shelf/node'
@@ -7,26 +10,59 @@ import Node from 'ember-shelf/node'
 
 
 export default Node.extend({
+
+  // ----- Attributes -----
   attrNames : [
-    "url",
-    "forks_url",
-    "commits_url",
-    "id",
-    "description",
-    "public",
-    "owner",
-    "user",
-    "truncated",
     "comments",
     "comments_url",
-    "html_url",
+    "commits_url",
+    "created_at",
+    "description",
+    "files",
+    "forks",
+    "forks_url",
     "git_pull_url",
     "git_push_url",
-    "created_at",
-    "updated_at",
-    "forks",
     "history",
+    "html_url",
+    "id",
+    "owner",
+    "public",
+    "truncated",
+    "updated_at",
+    "url",
+    "user",
   ],
 
-  gist : null,
+
+
+  // ----- Private properties -----
+  _fileTypeRegex : /^([\w-]+)-[\w-]+\.[\w-]+$/,
+
+
+
+  // ----- Computed properties -----
+  filesGroupedByType : computed('files', function (files) {
+    return _.groupBy(files, file => this._typeForFile(file))
+  }),
+
+  listFiles : reads('filesGroupedByType.list'),
+
+
+
+  // ----- Methods -----
+  _typeForFile ({name}) {
+    const match = name.match(this._fileTypeRegex)
+    return match ? match[1] : 'other'
+  },
+
+
+
+  // ----- Actions -----
+  actions : {
+    load (payload) {
+      this.populate(payload)
+      this.get('parent.lists').send('addLists', this.get('listFiles'))
+    }
+  }
 })

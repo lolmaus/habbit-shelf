@@ -8,7 +8,8 @@ import {Node, createNodeCP} from 'ember-shelf'
 
 export default Node.extend({
   attrNames : [
-    'gist',
+    'lists_index',
+    'lists_list',
   ],
 
   lists_index : createNodeCP('lists/index'),

@@ -21,6 +21,6 @@ export default ShelfService.extend({
 
   // ----- Events and observers -----
   logInitial : on('init', function () {
-    next(this, this.logStateChangeOnNode, '@@INIT', 'state')
+    next(this, this.logStateChangeOnNode, 'state', '@@INIT')
   })
 })

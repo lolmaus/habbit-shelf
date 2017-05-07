@@ -27,9 +27,11 @@ export default Service.extend({
   // ----- Configurable properties -----
 
 
-  // ----- Computed properties -----
-  token    : reads('shelf.state.session.token'),
-  username : reads('shelf.state.session.user.login'),
+  // ----- Aliases -----
+  state    : reads('shelf.state.github'),
+  session  : reads('shelf.state.session'),
+  token    : reads('session.token'),
+  username : reads('session.user.login'),
 
 
 
@@ -52,7 +54,21 @@ export default Service.extend({
     params = {
       ...params,
       body,
-      method : 'post',
+      method : 'POST',
+
+      headers : {
+        'Content-Type' : 'application/json',
+      },
+    }
+
+    return this.fetchJson(url, params)
+  },
+
+  patchJson (url, body, params = {}) {
+    params = {
+      ...params,
+      body,
+      method : 'PATCH',
 
       headers : {
         'Content-Type' : 'application/json',
@@ -82,19 +98,11 @@ export default Service.extend({
   },
 
   createList (slug) {
-    const gistId   = this.readGistIdFromLS()
-    const url      = `gists/${gistId}`
-    const fileName = `list-${slug}.txt`
+    return this._updateList(slug, {content : '<new list>'})
+  },
 
-    const data = {
-      files : {
-        [fileName] : {content : 'asdf'}
-      }
-    }
-
-    return this
-      .postJson(url, data)
-      .then(response => this._processGist(response))
+  deleteList (slug) {
+    return this._updateList(slug, null)
   },
 
 
@@ -122,7 +130,7 @@ export default Service.extend({
       })
       .then(gist => {
         this._writeGistIdToLS(gist.id)
-        this.get('shelf.state.github').dispatch('writeGist', gist)
+        this.get('state.gist').dispatch('load', gist)
       })
   },
 
@@ -141,4 +149,20 @@ export default Service.extend({
       .fetchText(file.raw_url)
       .then(content => ({...file, content}))
   },
+
+  _updateList (slug, content) {
+    const gistId = this.readGistIdFromLS()
+    const url = `gists/${gistId}`
+    const fileName = `list-${slug}.txt`
+
+    const data = {
+      files : {
+        [fileName] : content
+      }
+    }
+
+    return this
+      .patchJson(url, data)
+      .then(response => this._processGist(response))
+  }
 })

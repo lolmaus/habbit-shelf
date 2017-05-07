@@ -14,11 +14,11 @@ export default Route.extend(AuthenticatedRouteMixin, {
 
   // ----- Overridden properties -----
   model () {
-    const github = this.get('github')
-    const gistId = github.readGistIdFromLS()
-    const gist  = this.get('shelf.state.github.gist')
+    const github        = this.get('github')
+    const gistIdFromLS  = github.readGistIdFromLS()
+    const gistIdFromZen = this.get('shelf.state.github.gist.id')
 
-    if (gistId && !gist) return github.loadGist(gistId)
+    if (gistIdFromLS && !gistIdFromZen) return github.loadGist(gistIdFromLS)
 
     return null
   },
